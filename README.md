@@ -1,46 +1,87 @@
-# ethname
-Self-contained FreeBSD rc.d script for re-naming devices based on their MAC address. I needed it due to USB Ethernet devices coming up in different orders across OS upgrades.
+# ethname-pfsense
+Forked version of the original [ethname](https://github.com/eborisch/ethname) rc.d script for re-naming system network interfaces based on their MAC addresses adapted for pfSense.
 
-## Installation:
-Copy ethname into /usr/local/etc/rc.d/
+## Installation
 
-USAGE:
+  1. Copy `ethname` into `/usr/local/etc/rc.d/`
+  2. Copy `README.md` to `/usr/share/ethname/`
+  3. Copy `ethname.8` to `/usr/local/man/man8/`
+  
+You can run the following commands from the directory where you downloaded the repository:  
 
-Add the following to rc.conf:
+```
+mkdir -p /usr/local/ethname/
+
+install -m 555 ethname /usr/local/etc/rc.d/
+install -m 444 README.md /usr/local/ethname/
+install -m 444 ethname.8 /usr/local/man/man8/
+```
+
+## Configuration
+
+The recommended practice is to create a configuration file dedicated to ethname that is automatically parsed during boot.
+
+### 1. Set up configuration file
+Use nano or other preferred editor to create or open the file:
+
+```
+nano /etc/rc.conf.d/ethname
+```
+The file name must match the script file name we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
+
+### 2. Enable ethnane
+Enter the following line at the top if to the config file:
 ```
 ethname_enable="YES"
-ethname_<NAME>_mac="aa:bb:cc:dd:ee:ff"
 ```
+### 3. Assign NICs to MAC addresses:
+Add the following line for each system network interface you like to assign:
+```
+ethname_<INTERFACE>_mac="<MACADDRESS>"
+```
+Replace \<NAME\> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and \<MACADDRESS\> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
 
-For example:
+When done your file would look similar to the following examples on a system with 4 intel NICs:
 
 ```
 ethname_enable="YES"
-ethname_external_mac="aa:bb:cc:dd:ee:00"
-ethname_private_mac="aa:bb:cc:dd:ee:01"
+ethname_em0_mac="aa:bb:cc:dd:ee:00"
+ethname_em1_mac="aa:bb:cc:dd:ee:01"
+ethname_em2_mac="aa:bb:cc:dd:ee:02"
+ethname_em3_mac="aa:bb:cc:dd:ee:03"
 ```
 
-You can optionally restrict handling to a set of defined names with:
-```
-ethname_names="external private"
-```
-otherwise all defined `ethname_*_mac=""` values are used
+Only the interfaces defined in the `rc.conf` will be affected by the script, all other interfaces will remain untouched and will initialize in order determined         by PCI bus sequence.
 
-Make sure any interfaces you want to rename have their drivers loaded or
+### 4. Save the updated config file
+
+Exit nano by pressing `[ctrl] + x` followed by `y` and `[Enter]` to save changes.
+
+### 5. Adjust config file ownership and access
+
+Run the following command to make the file readable to rc:
+
+```
+chown root:wheel /etc/rc.conf.d/ethname
+chmod 0644 /etc/rc.conf.d/ethname
+```
+
+This needs to be done only the first time when the file was created.
+  
+## Notes
+  
+For ethname to work make sure any interfaces you want to rename have their drivers loaded or
 compiled in. If externnal is on axe0, for example, add `if_load_axe="YES"` to
 /boot/loader.conf. See the man page for your device (eg 'man axe') for
 particulars.
 
-All other devices are untouched.
+Ethname supports device name swapping without inflicts by utilizing temporary interface names when the script is executed.
 
-Optional rc.conf settings:
-```
-ethname_timeout : Maximum wait time for devices to appear. [default=30]
-```
+## References
 
-That's it. Use `ifconfig_<name>=""` settings in rc.conf with the new names.
+#### [Original ehtname repository](https://github.com/eborisch/ethname)
+The vanilla FreeBSD version of ethname created and maintained by [Eric A. Borich](https://github.com/eborisch)
 
-Supports device name swapping; uses temporary names as part of the process.
+#### [Persistent NIC ordering/naming basedon MAC address(es)](https://forum.opnsense.org/index.php?topic=27023.msg145910)
+Ethname implementation discussion with example use case for OPNSense similar to pfSense
 
-This version is has a new simplified interface, but will support the old
-echname_map and ethname_devices configurations, as well.

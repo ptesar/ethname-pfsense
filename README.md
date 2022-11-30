@@ -7,7 +7,7 @@ Forked version of the original [ethane](https://github.com/eborisch/ethname) rc.
   2. Copy `README.md` to `/usr/share/ethname/`
   3. Copy `ethname.8` to `/usr/local/man/man8/`
   
-You can run the following commands from the directory where you extracted ethname:  
+You can run the following commands from the directory where you downloaded the repository:  
 
 ```
 mkdir -p /usr/local/ethname/
@@ -24,7 +24,7 @@ The recommended practice is to create a configuration file dedicated to ethname 
    1. Create or open the file
 
       ```
-      nano /usr/local/etc/rc.d/ethame.conf
+      nano /usr/local/etc/rc.d/ethname.conf
       ```
    2. Enter the following line at the top if to the `rc.conf` file to enable ethnane
       ```
@@ -34,7 +34,7 @@ The recommended practice is to create a configuration file dedicated to ethname 
       ```
       ethname_<INTERFACE>_mac="<MACADDRESS>"
       ```
-      Replace <NAME> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and <MACADDRESS> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
+      Replace \<NAME\> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and \<MACADDRESS\> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
 
 When done your file would look similar to the following examples on a system with 4 intel NICs:
     

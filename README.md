@@ -55,7 +55,8 @@ The recommended practice is to create a configuration file dedicated to ethname 
    5. Run the following command to make the file readable to rc:
 
       ```
-      chmod 555 /etc/rc.conf.d/ethname
+      chown root:wheel /etc/rc.conf.d/ethname
+      chmod 0644 /etc/rc.conf.d/ethname
       ```
   
 ## Notes

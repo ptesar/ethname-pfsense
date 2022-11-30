@@ -19,12 +19,12 @@ install -m 444 ethname.8 /usr/local/man/man8/
 
 ## Configuration
 
-The recommended practice is to create a conf file dedicated to ethname that will is automatically included during the boot.
+The recommended practice is to create a configuration file dedicated to ethname that is automatically parsed during boot.
 
    1. Create or open the file
 
       ```
-      nano rc.conf
+      nano /usr/local/etc/rc.d/ethame.conf
       ```
    2. Enter the following line at the top if to the `rc.conf` file to enable ethnane
       ```
@@ -34,9 +34,9 @@ The recommended practice is to create a conf file dedicated to ethname that will
       ```
       ethname_<INTERFACE>_mac="<MACADDRESS>"
       ```
-      Where you replace <NAME> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and <MACADDRESS> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
+      Replace <NAME> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and <MACADDRESS> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
 
-When done, your file would look similar to the following examples on a system with 4 intel NICs:
+When done your file would look similar to the following examples on a system with 4 intel NICs:
     
 ```
 ethname_enable="YES"

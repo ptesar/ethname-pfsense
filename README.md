@@ -30,7 +30,7 @@ nano /etc/rc.conf.d/ethname
 The file name must match the script file name we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
 
 ### 2. Enable ethnane
-Enter the following line at the top if to the config file:
+Enter the following line at the top of the config file:
 ```
 ethname_enable="YES"
 ```
@@ -41,7 +41,7 @@ ethname_<INTERFACE>_mac="<MACADDRESS>"
 ```
 Replace \<NAME\> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and \<MACADDRESS\> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
 
-When done your file would look similar to the following examples on a system with 4 intel NICs:
+When done your file would look similar to the following example on a system with 4 intel NICs:
 
 ```
 ethname_enable="YES"
@@ -51,7 +51,7 @@ ethname_em2_mac="aa:bb:cc:dd:ee:02"
 ethname_em3_mac="aa:bb:cc:dd:ee:03"
 ```
 
-Only the interfaces defined in the `rc.conf` will be affected by the script, all other interfaces will remain untouched and will initialize in order determined         by PCI bus sequence.
+Only the interfaces defined in the config file will be affected by the script, all other interfaces will remain untouched and will initialize in order determined by PCI bus sequence.
 
 ### 4. Save the updated config file
 

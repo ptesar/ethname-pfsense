@@ -21,43 +21,50 @@ install -m 444 ethname.8 /usr/local/man/man8/
 
 The recommended practice is to create a configuration file dedicated to ethname that is automatically parsed during boot.
 
-   1. Create or open the file
+### 1. Set up configuration file
+Use nano or other preferred editor to create or open the file:
 
-      ```
-      nano /etc/rc.conf.d/ethname
-      ```
-      The file name must match the script file we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
+```
+nano /etc/rc.conf.d/ethname
+```
+The file name must match the script file we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
 
-   2. Enter the following line at the top if to the `rc.conf` file to enable ethnane
-      ```
-      ethname_enable="YES"
-      ```
-   3. Add the following line for each system network interface you like to assign to MAC address:
-      ```
-      ethname_<INTERFACE>_mac="<MACADDRESS>"
-      ```
-      Replace \<NAME\> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and \<MACADDRESS\> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
+### 2. Enable ethnane
+Enter the following line at the top if to the `rc.conf` file
+```
+ethname_enable="YES"
+```
+### 3. Assign NICs to MAC addresses:
+Add the following line for each system network interface you like to assign:
+```
+ethname_<INTERFACE>_mac="<MACADDRESS>"
+```
+Replace \<NAME\> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and \<MACADDRESS\> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
 
-      When done your file would look similar to the following examples on a system with 4 intel NICs:
-    
-      ```
-      ethname_enable="YES"
-      ethname_em0_mac="aa:bb:cc:dd:ee:00"
-      ethname_em1_mac="aa:bb:cc:dd:ee:01"
-      ethname_em2_mac="aa:bb:cc:dd:ee:02"
-      ethname_em3_mac="aa:bb:cc:dd:ee:03"
-      ```
+When done your file would look similar to the following examples on a system with 4 intel NICs:
 
-      Only the interfaces defined in the `rc.conf` will be affected by the script, all other interfaces will remain untouched and will initialize in order determined         by PCI bus sequence.
+```
+ethname_enable="YES"
+ethname_em0_mac="aa:bb:cc:dd:ee:00"
+ethname_em1_mac="aa:bb:cc:dd:ee:01"
+ethname_em2_mac="aa:bb:cc:dd:ee:02"
+ethname_em3_mac="aa:bb:cc:dd:ee:03"
+```
 
-   4. When done, exit nano by pressing `[ctrl] + x` followed by `y` and `[Enter]` to save changes.
+Only the interfaces defined in the `rc.conf` will be affected by the script, all other interfaces will remain untouched and will initialize in order determined         by PCI bus sequence.
 
-   5. Run the following command to make the file readable to rc:
+### 4. Save the updated config file
 
-      ```
-      chown root:wheel /etc/rc.conf.d/ethname
-      chmod 0644 /etc/rc.conf.d/ethname
-      ```
+Exit nano by pressing `[ctrl] + x` followed by `y` and `[Enter]` to save changes.
+
+### 5. Udjust config file ownership and access
+
+Run the following command to make the file readable to rc:
+
+```
+chown root:wheel /etc/rc.conf.d/ethname
+chmod 0644 /etc/rc.conf.d/ethname
+```
   
 ## Notes
   

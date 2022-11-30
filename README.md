@@ -30,7 +30,7 @@ nano /etc/rc.conf.d/ethname
 The file name must match the script file name we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
 
 ### 2. Enable ethnane
-Enter the following line at the top if to the config file
+Enter the following line at the top if to the config file:
 ```
 ethname_enable="YES"
 ```
@@ -57,7 +57,7 @@ Only the interfaces defined in the `rc.conf` will be affected by the script, all
 
 Exit nano by pressing `[ctrl] + x` followed by `y` and `[Enter]` to save changes.
 
-### 5. Udjust config file ownership and access
+### 5. Adjust config file ownership and access
 
 Run the following command to make the file readable to rc:
 
@@ -65,6 +65,8 @@ Run the following command to make the file readable to rc:
 chown root:wheel /etc/rc.conf.d/ethname
 chmod 0644 /etc/rc.conf.d/ethname
 ```
+
+This needs to be done only the first time when the file was created.
   
 ## Notes
   
@@ -74,3 +76,12 @@ compiled in. If externnal is on axe0, for example, add `if_load_axe="YES"` to
 particulars.
 
 Ethname supports device name swapping without inflicts by utilizing temporary interface names when the script is executed.
+
+## References
+
+#### [Original ehtname repository](https://github.com/eborisch/ethname)
+The vanilla FreeBSD version of ethname created and maintained by [Eric A. Borich](https://github.com/eborisch)
+
+#### [Persistent NIC ordering/naming basedon MAC address(es)](https://forum.opnsense.org/index.php?topic=27023.msg145910)
+Ethname implementation discussion with example use case for OPNSense similar to pfSense
+

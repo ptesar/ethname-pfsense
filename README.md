@@ -27,7 +27,7 @@ Use nano or other preferred editor to create or open the file:
 ```
 nano /etc/rc.conf.d/ethname
 ```
-The file name must match the script file we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
+The file name must match the script file name we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
 
 ### 2. Enable ethnane
 Enter the following line at the top if to the `rc.conf` file

@@ -1,5 +1,5 @@
 # ethname-pfsense
-Forked version of the original [ethane](https://github.com/eborisch/ethname) rc.d script for re-naming system network interfaces based on their MAC addresses adapted for pfSense.
+Forked version of the original [ethname](https://github.com/eborisch/ethname) rc.d script for re-naming system network interfaces based on their MAC addresses adapted for pfSense.
 
 ## Installation
 

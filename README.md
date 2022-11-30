@@ -5,7 +5,7 @@ Forked version of the original [ethane](https://github.com/eborisch/ethname) rc.
 
   1. Copy `ethname` into `/usr/local/etc/rc.d/`
   2. Copy `README.md` to `/usr/share/ethname/`
-  3. Copy `ethname8` to `/usr/local/man/man8/`
+  3. Copy `ethname.8` to `/usr/local/man/man8/`
   
 You can run the following commands from the directory where you extracted ethname:  
 

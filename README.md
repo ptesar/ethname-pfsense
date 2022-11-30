@@ -1,60 +1,58 @@
 # ethname-pfsense
 Forked version of the original [ethane](https://github.com/eborisch/ethname) rc.d script for re-naming system network interfaces based on their MAC addresses adapted for pfSense.
 
-## Installation:
+## Installation
 
-  1. Copy `ethname` into `/etc/rc.d/`
+  1. Copy `ethname` into `/usr/local/etc/rc.d/`
   2. Copy `README.md` to `/usr/share/ethname/`
   3. Copy `ethname8` to `/usr/local/man/man8/`
   
 You can run the following commands from the directory where you extracted ethname:  
 
 ```
-mkdir -p /etc/rc.d/
-install -m 555 ethname /etc/rc.d/
 mkdir -p /usr/local/ethname/
+
+install -m 555 ethname /usr/local/etc/rc.d/
 install -m 444 README.md /usr/local/ethname/
-mkdir -p /usr/local/man/man8/
 install -m 444 ethname.8 /usr/local/man/man8/
 ```
 
-USAGE:
+## Configuration
 
-Add the following to rc.conf:
+The recommended practice is to create a conf file dedicated to ethname that will is automatically included during the boot.
+
+   1. Create or open the file
+
+      ```
+      nano rc.conf
+      ```
+   2. Enter the following line at the top if to the `rc.conf` file to enable ethnane
+      ```
+      ethname_enable="YES"
+      ```
+   3. Add the following line for each system network interface you like to assign to MAC address:
+      ```
+      ethname_<INTERFACE>_mac="<MACADDRESS>"
+      ```
+      Where you replace <NAME> with your interface system name (eg `em0`, `vmx0`, `igb0` etc) and <MACADDRESS> with the value from your network adapter (eg `aa:bb:cc:dd:ee:ff`).
+
+When done, your file would look similar to the following examples on a system with 4 intel NICs:
+    
 ```
 ethname_enable="YES"
-ethname_<NAME>_mac="aa:bb:cc:dd:ee:ff"
+ethname_em0_mac="aa:bb:cc:dd:ee:00"
+ethname_em1_mac="aa:bb:cc:dd:ee:01"
+ethname_em2_mac="aa:bb:cc:dd:ee:02"
+ethname_em3_mac="aa:bb:cc:dd:ee:03"
 ```
 
-For example:
-
-```
-ethname_enable="YES"
-ethname_external_mac="aa:bb:cc:dd:ee:00"
-ethname_private_mac="aa:bb:cc:dd:ee:01"
-```
-
-You can optionally restrict handling to a set of defined names with:
-```
-ethname_names="external private"
-```
-otherwise all defined `ethname_*_mac=""` values are used
-
-Make sure any interfaces you want to rename have their drivers loaded or
+Only the interfaces defined in the `rc.conf` will be affected by the script, all other interfaces will remain untouched and will initialize in order determined by PCI bus sequence.
+  
+## Notes
+  
+For ethname to work make sure any interfaces you want to rename have their drivers loaded or
 compiled in. If externnal is on axe0, for example, add `if_load_axe="YES"` to
 /boot/loader.conf. See the man page for your device (eg 'man axe') for
 particulars.
 
-All other devices are untouched.
-
-Optional rc.conf settings:
-```
-ethname_timeout : Maximum wait time for devices to appear. [default=30]
-```
-
-That's it. Use `ifconfig_<name>=""` settings in rc.conf with the new names.
-
-Supports device name swapping; uses temporary names as part of the process.
-
-This version is has a new simplified interface, but will support the old
-echname_map and ethname_devices configurations, as well.
+Ethname supports device name swapping without inflicts by utilizing temporary interface names when the script is executed.

@@ -24,8 +24,10 @@ The recommended practice is to create a configuration file dedicated to ethname 
    1. Create or open the file
 
       ```
-      nano /usr/local/etc/rc.d/ethname.conf
+      nano /etc/rc.conf.d/ethname
       ```
+      The file name must match the script file we copied to `/usr/local/etc/rc.d/`, in our case `ethname`.
+
    2. Enter the following line at the top if to the `rc.conf` file to enable ethnane
       ```
       ethname_enable="YES"

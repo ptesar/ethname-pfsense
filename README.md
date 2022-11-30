@@ -1,8 +1,11 @@
-# ethname
-Self-contained FreeBSD rc.d script for re-naming devices based on their MAC address. I needed it due to USB Ethernet devices coming up in different orders across OS upgrades.
+# ethname-pfsense
+Forked version of the original [ethane](https://github.com/eborisch/ethname) rc.d script for re-naming system network interfaces based on their MAC addresses adapted for pfSense.
 
 ## Installation:
-Copy ethname into /usr/local/etc/rc.d/
+
+  1. Copy `ethname` into `/etc/rc.d/`
+  2. Copy `README.md` to `/usr/share/ethname/`
+  3. Copy `ethname8` to `/usr/local/man/man8/`
 
 USAGE:
 
